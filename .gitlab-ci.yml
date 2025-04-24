@@ -1,0 +1,77 @@
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+lint:
+  stage: lint
+  image: python:3.12
+  before_script:
+    - pip install black
+  script:
+    - black --check app/
+
+test:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - docker-compose build
+  script:
+    - docker-compose up -d  # Starts MongoDB via docker
+    - docker-compose exec -T app pytest -v tests/
+  after_script:
+    - docker-compose down
+  needs:
+    - lint
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker build -t ml-app:$CI_COMMIT_SHORT_SHA .
+    - echo "Built image ml-app:$CI_COMMIT_SHORT_SHA"
+    # Push image to AWS ECR for deployment
+  needs:
+    - test
+
+deploy_staging:
+  stage: deploy
+  image: alpine
+  script:
+    # Log in to AWS using credentials stored in GitLab variables
+    # Update AWS ECS staging cluster with the new image
+    - echo "Deploying to staging environment with image ml-app:$CI_COMMIT_SHORT_SHA"
+    # Set up AWS CloudWatch to monitor logs and GET /health endpoint
+    # Schedule AWS Lambda to call POST /train weekly for re-training
+  environment:
+    name: staging
+  only:
+    - develop
+  needs:
+    - build
+
+deploy_production:
+  stage: deploy
+  image: alpine
+  script:
+    # Log in to AWS using credentials stored in GitLab variables
+    # Update AWS ECS production cluster with the new image
+    - echo "Deploying to production environment with image ml-app:$CI_COMMIT_SHORT_SHA"
+    # AWS CloudWatch to monitor logs and GET /health endpoint
+    # Schedule AWS Lambda to call POST /train weekly for re-training
+  environment:
+    name: production
+  when: manual
+  only:
+    - main
+  needs:
+    - build
