@@ -1,6 +1,5 @@
 # ml-service-project
 
-## MLE Take-Home Assignment Starter
 ## Setup
 ## docker-compose up --build
 
