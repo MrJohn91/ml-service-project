@@ -23,7 +23,7 @@ def test_get_samples():
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data, list)
-    assert len(data) > 0  # Should have at least the initial 150 Iris samples
+    assert len(data) > 0  
 
 # Test the POST /train endpoint (training the model)
 def test_train_model():
