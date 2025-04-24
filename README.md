@@ -8,17 +8,17 @@
 
 This project is a **Machine Learning (ML) service** that provides a production-ready pipeline to:
 
-- Ingest data
-- Train a model
-- Serve predictions via via FastAPI (REST API)
+- Ingest data  
+- Train a model  
+- Serve predictions via FastAPI (REST API)  
 
 Built using **FastAPI**, containerized with **Docker**, and deployed to **AWS ECS**, the project features:
 
-- Automated **CI/CD** with **GitLab**
-- **Monitoring** via **AWS CloudWatch**
-- **Scheduled model re-training** via **AWS Lambda + EventBridge**
+- Automated **CI/CD** with **GitLab**  
+- **Monitoring** via **AWS CloudWatch**  
+- **Scheduled model re-training** via **AWS Lambda + EventBridge**  
 
-The service uses the Iris dataset (`data/iris.csv`) as a demo. Data is stored in **MongoDB**, and models are trained using **scikit-learn**.
+The service uses the Iris dataset (`data/iris.csv`) as a demo. Data is stored in **MongoDB**, and models are trained using **scikit-learn** with a `RandomForestClassifier`
 
 ---
 
@@ -26,35 +26,35 @@ The service uses the Iris dataset (`data/iris.csv`) as a demo. Data is stored in
 
 Build a reliable and scalable ML service that:
 
-- Accepts data via `POST /data`
-- Trains models via `POST /train`
-- Makes predictions via `POST /predict`
-- Checks service health via `GET /health`
-- Deploys to **AWS ECS**
-- Re-trains automatically every week
-- Follows best MLOps and DevOps practices
+- Accepts data via `POST /data`  
+- Trains models via `POST /train`  
+- Makes predictions via `POST /predict`  
+- Checks service health via `GET /health`  
+- Deploys to **AWS ECS**  
+- Re-trains automatically every week  
+- Follows best MLOps and DevOps practices  
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-| Technology               | Purpose                                 |
-|--------------------------|-----------------------------------------|
-| **FastAPI**              | REST API Framework                      |
-| **Scikit-learn**         | ML Model Training & Prediction          |
-| **MongoDB**              | NoSQL Data Storage                      |
-| **Docker**               | Containerization                        |
-| **AWS ECS**              | Service & DB Deployment                 |
-| **AWS ECR**              | Docker Image Registry                   |
-| **AWS CloudWatch**       | Logs & Monitoring                       |
-| **AWS Lambda + EventBridge** | Scheduled Re-training             |
-| **GitLab CI/CD**         | Continuous Integration & Deployment     |
-| **Pytest**               | Unit Testing                            |
-| **Python 3.12**          | Core Programming Language               |
+| Technology                    | Purpose                                 |
+|-------------------------------|-----------------------------------------|
+| **FastAPI**                   | REST API Framework                      |
+| **Scikit-learn**              | ML Model Training (`RandomForestClassifier`) & Prediction |     |
+| **MongoDB**                   | NoSQL Data Storage                      |
+| **Docker**                    | Containerization                        |
+| **AWS ECS**                   | Service & DB Deployment                 |
+| **AWS ECR**                   | Docker Image Registry                   |
+| **AWS CloudWatch**            | Logs & Monitoring                       |
+| **AWS Lambda + EventBridge**  | Scheduled Re-training                   |
+| **GitLab CI/CD**              | Continuous Integration & Deployment     |
+| **Pytest**                    | Unit Testing                            |
+| **Python 3.12**               | Core Programming Language               |
 
 ---
 
-## Setup Instructions
+## ⚙️ Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
@@ -71,7 +71,7 @@ docker-compose up --build
 ```
 
 ### 3. Access the Service
-- Base URL: [http://localhost:8000](http://localhost:8000)
+- Base URL: [http://localhost:8000](http://localhost:8000)  
 - Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
@@ -81,9 +81,9 @@ docker-compose up --build
 A **devcontainer** is included for easy local development using **VS Code**.
 
 ### Steps:
-1. Open the repo in **VS Code**
-2. When prompted, select **"Reopen in Container"**
-3. VS Code sets up Python, dependencies, and MongoDB automatically
+1. Open the repo in **VS Code**  
+2. When prompted, select **"Reopen in Container"**  
+3. VS Code sets up Python, dependencies, and MongoDB automatically  
 
 ---
 
@@ -118,6 +118,7 @@ GET /data?species=setosa
 ```http
 POST /train
 ```
+Trains a `RandomForestClassifier` model with scaled features using `StandardScaler`.
 
 ### Predict
 ```http
@@ -147,24 +148,16 @@ docker-compose exec app pytest -v tests/
 ## ☁️ Deployment
 
 ### GitLab CI/CD
-- Auto-pipeline: **Lint → Test → Build → Push to AWS ECR → Deploy to ECS**
-- **Monitoring**: Logs and health checks via **CloudWatch**
-- **Scheduled Re-training**: Triggered weekly via **Lambda + EventBridge**
+- Pipeline: **Lint → Test → Build → Push to AWS ECR → Deploy to ECS**  
+- Logs and metrics are tracked with **CloudWatch**  
+- Weekly re-training is automated via **AWS Lambda + EventBridge**
 
-### 🛠️ Manual Deployment
+### Manual Deployment
 1. Build Docker image:
 ```bash
 docker build -t ml-service .
 ```
-2. Push to **AWS ECR**
-3. Deploy to **AWS ECS** via AWS CLI or AWS Console
-
----
-
-## 📝 Notes
-
-- Ensure that `data/Arc.png` exists and is pushed to GitHub (case-sensitive).
-- If using custom domain or HTTPS, configure FastAPI settings accordingly.
-- Consider using secrets management for production MongoDB credentials.
+2. Push to **AWS ECR**  
+3. Deploy to **AWS ECS** via AWS CLI or Console  
 
 ---
