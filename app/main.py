@@ -48,3 +48,10 @@ def predict(sample: PredictionRequest):
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+@app.get("/metrics")
+def get_metrics():
+    metrics = model.get_metrics()
+    if "error" in metrics:
+        raise HTTPException(status_code=400, detail=metrics["error"])
+    return metrics
