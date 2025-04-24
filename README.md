@@ -10,7 +10,7 @@ This project is a **Machine Learning (ML) service** that provides a production-r
 
 - Ingest data
 - Train a model
-- Serve predictions via REST API
+- Serve predictions via via FastAPI (REST API)
 
 Built using **FastAPI**, containerized with **Docker**, and deployed to **AWS ECS**, the project features:
 
