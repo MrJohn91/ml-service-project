@@ -1,6 +1,6 @@
 # ML Service Project
 
-![Architecture Diagram](data/Arc.png)
+<img src="data/Arc.png" alt="Architecture Diagram" width="600"/>
 
 ---
 
