@@ -18,7 +18,7 @@ Built using **FastAPI**, containerized with **Docker**, and deployed to **AWS EC
 - **Monitoring** via **AWS CloudWatch**  
 - **Scheduled model re-training** via **AWS Lambda + EventBridge**  
 
-The service uses the Iris dataset (`data/iris.csv`) as a demo. Data is stored in **MongoDB**, and models are trained using **scikit-learn** with a `RandomForestClassifier`
+The service uses the Iris dataset (`data/iris.csv`) as a demo. Data is stored in **MongoDB**, and models are trained using **scikit-learn** with a `RandomForestClassifier`.
 
 ---
 
@@ -29,6 +29,7 @@ Build a reliable and scalable ML service that:
 - Accepts data via `POST /data`  
 - Trains models via `POST /train`  
 - Makes predictions via `POST /predict`  
+- Returns training metrics via `GET /metrics`  
 - Checks service health via `GET /health`  
 - Deploys to **AWS ECS**  
 - Re-trains automatically every week  
@@ -41,8 +42,8 @@ Build a reliable and scalable ML service that:
 | Technology                    | Purpose                                 |
 |-------------------------------|-----------------------------------------|
 | **FastAPI**                   | REST API Framework                      |
-| **Scikit-learn**              | ML Model Training (`RandomForestClassifier`) & Prediction |     |
-| **MongoDB**                   | NoSQL Data Storage                      |
+| **Scikit-learn**              | ML Model Training & Prediction          |
+| **MongoDB**                   | Data Storage                      |
 | **Docker**                    | Containerization                        |
 | **AWS ECS**                   | Service & DB Deployment                 |
 | **AWS ECR**                   | Docker Image Registry                   |
@@ -134,6 +135,28 @@ POST /predict
 }
 ```
 
+### Model Performance Metrics
+```http
+GET /metrics
+```
+Returns training metrics including:
+- **accuracy**
+- **f1_score**
+- **confusion_matrix**
+
+**Example Response:**
+```json
+{
+  "accuracy": 0.9677,
+  "f1_score": 0.9675,
+  "confusion_matrix": [
+    [11, 0, 0],
+    [0, 11, 0],
+    [0, 1, 8]
+  ]
+}
+```
+
 ---
 
 ## Run Tests
@@ -159,5 +182,3 @@ docker build -t ml-service .
 ```
 2. Push to **AWS ECR**  
 3. Deploy to **AWS ECS** via AWS CLI or Console  
-
----
