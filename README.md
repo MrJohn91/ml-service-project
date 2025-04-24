@@ -1,6 +1,6 @@
 # ML Service Project
 
-<img src="data/Arc.png" alt="Architecture Diagram" width="600"/>
+<img src="data/Arc.png" alt="Architecture Diagram" width="800"/>
 
 ---
 
