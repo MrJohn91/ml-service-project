@@ -73,7 +73,6 @@ docker-compose up --build
 
 ### 3. Access the Service
 - Base URL: [http://localhost:8000](http://localhost:8000)  
-- Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
