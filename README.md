@@ -1,4 +1,4 @@
-# ML Service Project
+# ML Pipeline
 
 <img src="data/Arc.png" alt="Architecture Diagram" width="800"/>
 
