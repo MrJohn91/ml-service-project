@@ -49,7 +49,7 @@ def train(samples):
     return {"message": "Model trained successfully"}
 
 def predict(sample):
-    # Load model if not already in memory
+    # Load model 
     try:
         with open(MODEL_PATH, "rb") as f:
             loaded_scaler, loaded_model = pickle.load(f)
